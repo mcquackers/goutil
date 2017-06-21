@@ -1,0 +1,21 @@
+{
+	"version": 0,
+	"dependencies": [
+		{
+			"importpath": "github.com/golang/glog",
+			"repository": "https://github.com/golang/glog",
+			"vcs": "git",
+			"revision": "23def4e6c14b4da8ac2ed8007337bc5eb5007998",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "gopkg.in/alexcesaro/statsd.v2",
+			"repository": "https://gopkg.in/alexcesaro/statsd.v2",
+			"vcs": "git",
+			"revision": "7fea3f0d2fab1ad973e641e51dba45443a311a90",
+			"branch": "master",
+			"notests": true
+		}
+	]
+}
