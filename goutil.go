@@ -11,6 +11,14 @@ import (
 	"gopkg.in/alexcesaro/statsd.v2"
 )
 
+type Error struct {
+	Message string `json:"error"`
+}
+
+func (this *Error) Error() string {
+	return this.Message
+}
+
 type InternalErrorer interface {
 	InternalError()
 }
@@ -104,5 +112,33 @@ func HandleStatusCode(code int) error {
 		return errors.New("404 Not found")
 	default:
 		return errors.New(strconv.Itoa(code) + " Other error")
+	}
+}
+
+type status struct {
+	Status string `json:"status"`
+}
+
+type Response struct {
+	Meta *status     `json:"meta"`
+	Data interface{} `json:"data"`
+}
+
+func NewResponse(body interface{}) *Response {
+	response := &Response{}
+	switch body := body.(type) {
+	case error:
+		response.Meta = &status{Status: "error"}
+		response.Data = NewError(body.Error())
+	case interface{}:
+		response.Meta = &status{Status: "success"}
+		response.Data = body
+	}
+	return response
+}
+
+func NewError(err string) *Error {
+	return &Error{
+		Message: err,
 	}
 }
